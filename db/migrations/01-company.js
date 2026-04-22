@@ -2,86 +2,89 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('report_sales_performance', {
-
+    await queryInterface.createTable('company', {
       id: {
-        primaryKey: true,
         allowNull: false,
         type: Sequelize.STRING,
         defaultValue: Sequelize.literal('uuid_generate_v7()'),
+        primaryKey: true,
       },
-
-      periode: {
-        type: Sequelize.STRING,
+      code: {
         allowNull: false,
-      },
-
-      nik: {
         type: Sequelize.STRING,
+      },
+      label: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      address: {
+        allowNull: false,
+        type: Sequelize.TEXT,
+      },
+      email: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      no_telp: {
+        allowNull: false,
+        type: Sequelize.STRING(30),
+      },
+      status: {
         allowNull: true,
+        type: Sequelize.ENUM('ACTIVED', 'PENDING', 'DUE SOON', 'SUSPENDED', 'TERMINATED', 'CANCELED'),
+        defaultValue: 'PENDING',
       },
-
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-
-      sales_target_amount: {
-        type: Sequelize.DECIMAL(32,16),
-        allowNull: false,
-      },
-
-      completion_amount: {
-        type: Sequelize.DECIMAL(32,16),
-        allowNull: false,
-      },
-
-      proportion_amount: {
-        type: Sequelize.DECIMAL(32,16),
+      max_user: {
         allowNull: true,
-      },
-
-      flag: {
         type: Sequelize.INTEGER,
-        defaultValue: 1,
       },
-
+      cost: {
+        allowNull: true,
+        type: Sequelize.DECIMAL(32, 16),
+      },
+      cost_total: {
+        allowNull: true,
+        type: Sequelize.DECIMAL(32, 16),
+      },
+      start_date: {
+        allowNull: true,
+        type: Sequelize.DATEONLY,
+      },
+      end_date: {
+        allowNull: true,
+        type: Sequelize.DATEONLY,
+      },
+      remainder_date: {
+        allowNull: true,
+        type: Sequelize.DATEONLY,
+      },
       created_by: {
         allowNull: false,
         type: Sequelize.STRING,
       },
-
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('now()'),
       },
-
       updated_by: {
+        allowNull: true,
         type: Sequelize.STRING,
       },
-
       updated_at: {
         type: Sequelize.DATE,
       },
-
       deleted_at: {
         type: Sequelize.DATE,
       },
-
     },
     {
-      schema: 'report',
-    },
-  );
-    await queryInterface.addIndex('report.report_sales_performance', ['nik','name']);
+      schema: 'master',
+    });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeIndex('report.report_sales_performance', 'nik');
-    await queryInterface.removeIndex('report.report_sales_performance', 'name');
     await queryInterface.sequelize.query(
-      `DROP TABLE IF EXISTS report.report_sales_performance`,
+      `DROP TABLE IF EXISTS master.company`,
     );
-
-  },
+  }
 };

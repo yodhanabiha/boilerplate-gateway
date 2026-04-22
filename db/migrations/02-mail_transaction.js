@@ -12,17 +12,17 @@ module.exports = {
       },
 
       send_from: {
-        type: Sequelize.TEXT,
-        allowNull: false,
+        type: Sequelize.STRING,
+        allowNull: true,
       },
 
       send_to: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: false,
       },
 
       send_cc: {
-        type: Sequelize.TEXT,
+        type: Sequelize.STRING,
         allowNull: true,
       },
 
@@ -36,11 +36,6 @@ module.exports = {
         allowNull: false,
       },
 
-      send_param: {
-        allowNull: true,
-        type: Sequelize.JSONB,
-      },
-      
       send_at: {
         type: Sequelize.DATE,
         allowNull: true,
@@ -51,10 +46,26 @@ module.exports = {
         allowNull: true,
       },
 
-      flag: {
-        type: Sequelize.INTEGER,
-        defaultValue: 1,
+      status: {
+        type: Sequelize.ENUM("DRAFT", "WAITING", "PROCESSED", "SUCCESS", "ERROR", "RESENDER"),
+        allowNull: false,
+        defaultValue: "DRAFT"
       },
+
+      send_param: {
+        allowNull: true,
+        type: Sequelize.JSONB,
+      },
+
+      company_id: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      company_info: {
+        type: Sequelize.JSONB,
+        allowNull: true,
+      },
+
       created_by: {
         allowNull: false,
         type: Sequelize.STRING,
@@ -78,10 +89,8 @@ module.exports = {
       schema: 'transaction',
     },
   );
-    await queryInterface.addIndex('transaction.mail_transaction', ['flag']);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeIndex('transaction.mail_transaction', 'flag');
     await queryInterface.sequelize.query(
       `DROP TABLE IF EXISTS transaction.mail_transaction`,
     );

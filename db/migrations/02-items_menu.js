@@ -13,7 +13,7 @@ module.exports = {
       
       icon: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: true,
       },
 
       label_key: {
@@ -38,7 +38,7 @@ module.exports = {
       },
 
       indexed: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BIGINT,
         defaultValue: 0,
       },
       

@@ -12,7 +12,7 @@ module.exports = {
       },
 
       code: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(10),
         allowNull: false,
         unique:true
       },
@@ -36,6 +36,16 @@ module.exports = {
         type: Sequelize.JSONB,
         allowNull: true,
       },
+
+      company_id: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      company_info: {
+        type: Sequelize.JSONB,
+        allowNull: true,
+      },
+
       created_by: {
         allowNull: false,
         type: Sequelize.STRING,

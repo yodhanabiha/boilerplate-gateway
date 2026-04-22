@@ -9,6 +9,10 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: Sequelize.literal('uuid_generate_v7()'),
       },
+      foto: {
+        type: Sequelize.TEXT,
+        allowNull: true,
+      },
       nik: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -18,13 +22,13 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      noTelp: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      noHp: {
-        type: Sequelize.STRING,
+      no_telp: {
+        type: Sequelize.STRING(30),
         allowNull: true,
+      },
+      no_hp: {
+        type: Sequelize.STRING(30),
+        allowNull: false,
       },
       email: {
         type: Sequelize.STRING,
@@ -32,6 +36,14 @@ module.exports = {
       },
       address: {
         type: Sequelize.TEXT,
+        allowNull: false,
+      },
+      join_date: {
+        type: Sequelize.DATEONLY,
+        allowNull: false,
+      },
+      born_date: {
+        type: Sequelize.DATEONLY,
         allowNull: false,
       },
       
@@ -47,21 +59,6 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         allowNull: true,
-      },
-
-
-      organization_code: {
-        type: Sequelize.STRING,
-        references: {
-          model: {
-            tableName: 'organization',
-            schema: 'master'
-          },
-          key: 'code',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        allowNull: false,
       },
 
       user_id: {
@@ -87,6 +84,16 @@ module.exports = {
         type: Sequelize.JSONB,
         allowNull: true,
       },
+
+      company_id: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      company_info: {
+        type: Sequelize.JSONB,
+        allowNull: true,
+      },
+
       created_by: {
         allowNull: false,
         type: Sequelize.STRING,

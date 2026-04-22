@@ -37,23 +37,23 @@ module.exports = {
 
       text_other: {
         type: Sequelize.JSONB,
-        allowNull: true,
+        allowNull: false,
       },
 
       description: {
-        type: Sequelize.STRING,
-        allowNull: true,
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
       
       indexed: {
         type: Sequelize.INTEGER,
-        allowNull: true,
+        allowNull: false,
         defaultValue:0
       },
 
       parent_id: {
-        type: Sequelize.BIGINT,
-        allowNull: true,
+        type: Sequelize.INTEGER,
+        allowNull: false,
         defaultValue:0
       },
 
@@ -66,6 +66,16 @@ module.exports = {
         type: Sequelize.JSONB,
         allowNull: true,
       },
+
+      company_id: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      company_info: {
+        type: Sequelize.JSONB,
+        allowNull: true,
+      },
+
       created_by: {
         allowNull: false,
         type: Sequelize.STRING,

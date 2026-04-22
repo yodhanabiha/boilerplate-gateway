@@ -2,52 +2,38 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('payment_receipt_items', {
-      
+    await queryInterface.createTable('company_user', {
       id: {
         allowNull: false,
-        autoIncrement: true,
+        type: Sequelize.STRING,
+        defaultValue: Sequelize.literal('uuid_generate_v7()'),
         primaryKey: true,
-        type: Sequelize.BIGINT,
       },
-
-      payment_receipt_id: {
-        type: Sequelize.BIGINT,
+      company_id: {
+        allowNull: false,
+        type: Sequelize.STRING,
         references: {
           model: {
-            tableName: 'payment_receipt',
-            schema: 'transaction'
+            tableName: 'company',
+            schema: 'master'
           },
-          key: 'id',
+          key: 'id'
         },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        allowNull: false,
+        onDelete: 'CASCADE'
       },
-
-      invoice_quotation_id: {
-        type: Sequelize.BIGINT,
+      user_id: {
+        allowNull: false,
+        type: Sequelize.STRING,
         references: {
           model: {
-            tableName: 'invoice',
-            schema: 'transaction'
+            tableName: 'users',
+            schema: 'credentials'
           },
-          key: 'id',
+          key: 'id'
         },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        allowNull: false,
-      },
-    
-      
-      flag: {
-        type: Sequelize.INTEGER,
-        defaultValue: 1,
-      },
-      
-      log_history: {
-        type: Sequelize.JSONB,
-        allowNull: true,
+        onDelete: 'CASCADE'
       },
       created_by: {
         allowNull: false,
@@ -59,6 +45,7 @@ module.exports = {
         defaultValue: Sequelize.literal('now()'),
       },
       updated_by: {
+        allowNull: true,
         type: Sequelize.STRING,
       },
       updated_at: {
@@ -69,14 +56,12 @@ module.exports = {
       },
     },
     {
-      schema: 'transaction',
-    },
-  );
+      schema: 'master',
+    });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.sequelize.query(
-      `DROP TABLE IF EXISTS transaction.payment_receipt_items`,
+      `DROP TABLE IF EXISTS master.company_user`,
     );
-
-  },
+  }
 };

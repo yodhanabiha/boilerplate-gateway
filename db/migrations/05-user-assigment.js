@@ -25,24 +25,11 @@ module.exports = {
         onDelete: 'CASCADE',
       },
 
-      organization_code: {
-        type: Sequelize.STRING,
-        references: {
-          model: {
-            tableName: 'organization',
-            schema: 'master'
-          },
-          key: 'code',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        allowNull: false,
-      },
-
       created_by: {
         allowNull: false,
         type: Sequelize.STRING,
       },
+
 
       created_at: {
         allowNull: false,
@@ -67,10 +54,8 @@ module.exports = {
       schema: 'credentials',
     },
   );
-    await queryInterface.addIndex('credentials.users_assigment', ['organization_code']);
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.removeIndex('credentials.users_assigment', 'organization_code');
     await queryInterface.sequelize.query(
       `DROP TABLE IF EXISTS credentials.users_assigment`,
     );

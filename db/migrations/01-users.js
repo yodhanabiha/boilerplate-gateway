@@ -11,6 +11,21 @@ module.exports = {
         defaultValue: Sequelize.literal('uuid_generate_v7()'),
       },
 
+      fullname: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+
+      address: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+
+      no_telp: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+
       email: {
         type: Sequelize.STRING,
         unique: true,
@@ -41,6 +56,11 @@ module.exports = {
         defaultValue: false,
       },
 
+      is_super: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+
       lang: {
         type: Sequelize.STRING,
       },
@@ -57,6 +77,11 @@ module.exports = {
         values: [ "NOT ACTIVED","ACTIVED","NEED VERIFICATION","BANNED"],
         allowNull: false,
         defaultValue : "NEED VERIFICATION"
+      },
+
+      token_gcp: {
+        type: Sequelize.STRING,
+        allowNull: true,
       },
 
       created_by: {
@@ -81,6 +106,7 @@ module.exports = {
       deleted_at: {
         type: Sequelize.DATE,
       },
+
 
     },
     {

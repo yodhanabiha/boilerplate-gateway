@@ -43,10 +43,16 @@ module.exports = {
         defaultValue: false,
       },
 
+      act_reads: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
+
       act_create: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
       },
+
 
       act_update: {
         type: Sequelize.BOOLEAN,
