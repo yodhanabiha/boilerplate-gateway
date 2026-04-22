@@ -1,0 +1,14 @@
+**/node_modules
+/dist
+.env
+.husky/
+/db/seeders/*
+
+/storage/certificate/data/*
+/storage/data/*
+# package-lock.json
+
+# Credentials
+laboratorium-*.json
+*.pem
+*.key

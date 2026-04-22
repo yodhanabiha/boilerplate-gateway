@@ -1,0 +1,47 @@
+'use strict';
+
+/** @type {import('sequelize-cli').Migration} */
+module.exports = {
+  async up(queryInterface, Sequelize) {
+    await queryInterface.createTable(
+      'roles',
+      {
+        id: {
+          allowNull: false,
+          autoIncrement: true,
+          primaryKey: true,
+          type: Sequelize.BIGINT,
+        },
+        name: {
+          type: Sequelize.STRING,
+        },
+        created_by: {
+          allowNull: false,
+          type: Sequelize.STRING,
+        },
+        created_at: {
+          allowNull: false,
+          type: Sequelize.DATE,
+          defaultValue: Sequelize.literal('now()'),
+        },
+        updated_by: {
+          type: Sequelize.STRING,
+        },
+        updated_at: {
+          type: Sequelize.DATE,
+        },
+        deleted_at: {
+          type: Sequelize.DATE,
+        },
+      },
+      {
+        schema: 'master',
+      },
+    );
+  },
+  async down(queryInterface, Sequelize) {
+    await queryInterface.sequelize.query(
+      `DROP TABLE IF EXISTS master.roles`,
+    );
+  },
+};

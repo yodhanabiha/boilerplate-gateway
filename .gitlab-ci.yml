@@ -1,0 +1,19 @@
+stages:
+  - deploy
+
+deploy:
+  image: alpine:latest
+  stage: deploy
+  script:
+    - chmod og= $ID_RSA
+    - apk update && apk add openssh-client
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd /home/appnet/application/source/clickmark-gateway && git checkout DEVELOPMENT"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd /home/appnet/application/source/clickmark-gateway && git pull"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd /home/appnet/application/source/clickmark-gateway && git status"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd /home/appnet/application/source/clickmark-gateway  && docker build . -t clickmark-gateway:latest"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd /opt/_DOCKER_/CLICKMARK/ && docker compose down"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd /opt/_DOCKER_/CLICKMARK/ && docker compose up -d"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd /opt/_DOCKER_/CLICKMARK/ && yes Y | docker image prune"
+    
+  rules:
+    - if: $CI_COMMIT_BRANCH == "DEVELOPMENT"
